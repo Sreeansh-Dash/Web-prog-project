@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Code Escape Room</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Consolas, monospace;
+    background: #0b0b0b;
+    color: #e0e0e0;
+}
+
+header {
+    text-align: center;
+    padding: 25px;
+    background: #111;
+    border-bottom: 2px solid #00ffcc;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #00ffcc;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #121212;
+    border-radius: 10px;
+}
+
+.section {
+    margin-top: 35px;
+    padding: 25px;
+    background: #0f0f0f;
+    border-left: 4px solid #00ffcc;
+}
+
+pre {
+    background: #050505;
+    padding: 15px;
+    border-radius: 6px;
+    color: #ff7675;
+    font-size: 15px;
+    overflow-x: auto;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 15px;
+    background: #020202;
+    color: #9effff;
+    border: 1px solid #444;
+    padding: 12px;
+    font-family: Consolas, monospace;
+    font-size: 15px;
+}
+
+.task {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #f1c40f;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.submit-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #00ffcc;
+    color: #000;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.try {
+    margin-top: 10px;
+    color: #e74c3c;
+}
+
+.correct {
+    margin-top: 10px;
+    color: #2ecc71;
+    display: none;
+}
+
+input[type="checkbox"]:checked ~ .correct {
+    display: block;
+}
+
+input[type="checkbox"]:checked ~ .try {
+    display: none;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 13px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧠 Code Escape Room</h1>
+    <p>Fix the bugs. Debug the code. Escape the lab.</p>
+</header>
+
+<div class="container">
+
+    <!-- Python -->
+    <div class="section">
+        <h2>🐍 Python Debug Console</h2>
+        <pre>
+x = 5
+y = "5"
+print(x + y)
+        </pre>
+
+        <div class="task">
+            Fix the type error so the program runs correctly.
+        </div>
+
+        <textarea placeholder="Type corrected Python code here..."></textarea>
+
+        <input type="checkbox" id="py">
+        <label class="submit-btn" for="py">Submit</label>
+
+        <div class="try">❌ Try Again</div>
+        <div class="correct">✅ Correct! Python bug fixed.</div>
+    </div>
+
+    <!-- Java -->
+    <div class="section">
+        <h2>☕ Java Debug Console</h2>
+        <pre>
+int a = 10;
+int b = 20;
+System.out.println(a = b);
+        </pre>
+
+        <div class="task">
+            Identify and correct the logical mistake.
+        </div>
+
+        <textarea placeholder="Type corrected Java code here..."></textarea>
+
+        <input type="checkbox" id="java">
+        <label class="submit-btn" for="java">Submit</label>
+
+        <div class="try">❌ Try Again</div>
+        <div class="correct">✅ Correct! Java logic fixed.</div>
+    </div>
+
+    <!-- HTML -->
+    <div class="section">
+        <h2>🌐 HTML Debug Console</h2>
+        <pre>
+&lt;img src="photo.jpg"&gt;
+        </pre>
+
+        <div class="task">
+            Improve accessibility by fixing the missing part.
+        </div>
+
+        <textarea placeholder="Type corrected HTML here..."></textarea>
+
+        <input type="checkbox" id="html">
+        <label class="submit-btn" for="html">Submit</label>
+
+        <div class="try">❌ Try Again</div>
+        <div class="correct">✅ Correct! HTML fixed.</div>
+    </div>
+
+    <!-- CSS -->
+    <div class="section">
+        <h2>🎨 CSS Debug Console</h2>
+        <pre>
+.box {
+  width: 100;
+  height: 100px;
+}
+        </pre>
+
+        <div class="task">
+            Fix the invalid CSS property.
+        </div>
+
+        <textarea placeholder="Type corrected CSS here..."></textarea>
+
+        <input type="checkbox" id="css">
+        <label class="submit-btn" for="css">Submit</label>
+
+        <div class="try">❌ Try Again</div>
+        <div class="correct">✅ Correct! CSS fixed.</div>
+    </div>
+
+</div>
+
+<footer>
+    Code Escape Room | HTML & CSS Prototype | Review-1
+</footer>
+
+</body>
+</html>
