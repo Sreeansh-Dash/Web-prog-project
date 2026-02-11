@@ -1,0 +1,5 @@
+{
+  "name": "Protocol: MELTDOWN",
+  "description": "A high-stakes, cyberpunk-themed React escape room. Players must debug code, fix logic flows, and override systems to prevent a nuclear reactor meltdown before the timer runs out.",
+  "requestFramePermissions": []
+}

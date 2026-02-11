@@ -1,221 +1,129 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Code Escape Room</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Consolas, monospace;
-    background: #0b0b0b;
-    color: #e0e0e0;
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protocol: MELTDOWN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"JetBrains Mono"', 'monospace'],
+              tech: ['"Share Tech Mono"', 'monospace'],
+              display: ['"Orbitron"', 'sans-serif'],
+            },
+            colors: {
+              primary: '#00ff41',
+              'primary-dim': '#008F11',
+              secondary: '#00f3ff',
+              danger: '#ff003c',
+              warning: '#f59e0b',
+              dark: '#050505',
+              'surface-dark': '#0f1115',
+              'surface-lighter': '#161b22',
+            },
+            animation: {
+              'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'scan': 'scan 4s linear infinite',
+              'glitch': 'glitch 1s linear infinite',
+              'blink': 'blink 1s step-end infinite',
+              'fade-in': 'fadeIn 1s ease-out forwards',
+              'slide-up': 'slideUp 0.8s ease-out forwards',
+              'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+              'zoom-in': 'zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+            },
+            keyframes: {
+              scan: {
+                '0%': { backgroundPosition: '0 0' },
+                '100%': { backgroundPosition: '0 100%' },
+              },
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
+              },
+              blink: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              slideInRight: {
+                '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' },
+              },
+              zoomIn: {
+                '0%': { opacity: '0', transform: 'scale(0.8)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        color: #e5e7eb;
+        overflow-x: hidden;
+      }
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.2) 50%,
+          rgba(0,0,0,0.2)
+        );
+        background-size: 100% 4px;
+        position: fixed;
+        pointer-events: none;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 50;
+      }
+      .crt-overlay {
+        background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 100%);
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 49;
+        pointer-events: none;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f1115;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border: 1px solid #00ff41;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
 }
-
-header {
-    text-align: center;
-    padding: 25px;
-    background: #111;
-    border-bottom: 2px solid #00ffcc;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 32px;
-    color: #00ffcc;
-}
-
-header p {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #121212;
-    border-radius: 10px;
-}
-
-.section {
-    margin-top: 35px;
-    padding: 25px;
-    background: #0f0f0f;
-    border-left: 4px solid #00ffcc;
-}
-
-pre {
-    background: #050505;
-    padding: 15px;
-    border-radius: 6px;
-    color: #ff7675;
-    font-size: 15px;
-    overflow-x: auto;
-}
-
-textarea {
-    width: 100%;
-    height: 120px;
-    margin-top: 15px;
-    background: #020202;
-    color: #9effff;
-    border: 1px solid #444;
-    padding: 12px;
-    font-family: Consolas, monospace;
-    font-size: 15px;
-}
-
-.task {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #f1c40f;
-}
-
-input[type="checkbox"] {
-    display: none;
-}
-
-.submit-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #00ffcc;
-    color: #000;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-}
-
-.try {
-    margin-top: 10px;
-    color: #e74c3c;
-}
-
-.correct {
-    margin-top: 10px;
-    color: #2ecc71;
-    display: none;
-}
-
-input[type="checkbox"]:checked ~ .correct {
-    display: block;
-}
-
-input[type="checkbox"]:checked ~ .try {
-    display: none;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    margin: 40px 0 20px;
-    font-size: 13px;
-    opacity: 0.6;
-}
-</style>
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body>
-
-<header>
-    <h1>🧠 Code Escape Room</h1>
-    <p>Fix the bugs. Debug the code. Escape the lab.</p>
-</header>
-
-<div class="container">
-
-    <!-- Python -->
-    <div class="section">
-        <h2>🐍 Python Debug Console</h2>
-        <pre>
-x = 5
-y = "5"
-print(x + y)
-        </pre>
-
-        <div class="task">
-            Fix the type error so the program runs correctly.
-        </div>
-
-        <textarea placeholder="Type corrected Python code here..."></textarea>
-
-        <input type="checkbox" id="py">
-        <label class="submit-btn" for="py">Submit</label>
-
-        <div class="try">❌ Try Again</div>
-        <div class="correct">✅ Correct! Python bug fixed.</div>
-    </div>
-
-    <!-- Java -->
-    <div class="section">
-        <h2>☕ Java Debug Console</h2>
-        <pre>
-int a = 10;
-int b = 20;
-System.out.println(a = b);
-        </pre>
-
-        <div class="task">
-            Identify and correct the logical mistake.
-        </div>
-
-        <textarea placeholder="Type corrected Java code here..."></textarea>
-
-        <input type="checkbox" id="java">
-        <label class="submit-btn" for="java">Submit</label>
-
-        <div class="try">❌ Try Again</div>
-        <div class="correct">✅ Correct! Java logic fixed.</div>
-    </div>
-
-    <!-- HTML -->
-    <div class="section">
-        <h2>🌐 HTML Debug Console</h2>
-        <pre>
-&lt;img src="photo.jpg"&gt;
-        </pre>
-
-        <div class="task">
-            Improve accessibility by fixing the missing part.
-        </div>
-
-        <textarea placeholder="Type corrected HTML here..."></textarea>
-
-        <input type="checkbox" id="html">
-        <label class="submit-btn" for="html">Submit</label>
-
-        <div class="try">❌ Try Again</div>
-        <div class="correct">✅ Correct! HTML fixed.</div>
-    </div>
-
-    <!-- CSS -->
-    <div class="section">
-        <h2>🎨 CSS Debug Console</h2>
-        <pre>
-.box {
-  width: 100;
-  height: 100px;
-}
-        </pre>
-
-        <div class="task">
-            Fix the invalid CSS property.
-        </div>
-
-        <textarea placeholder="Type corrected CSS here..."></textarea>
-
-        <input type="checkbox" id="css">
-        <label class="submit-btn" for="css">Submit</label>
-
-        <div class="try">❌ Try Again</div>
-        <div class="correct">✅ Correct! CSS fixed.</div>
-    </div>
-
-</div>
-
-<footer>
-    Code Escape Room 
-</footer>
-
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
