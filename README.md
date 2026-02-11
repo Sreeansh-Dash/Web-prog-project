@@ -1,9 +1,5 @@
 # Protocol: MELTDOWN
 
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
 > **CRITICAL ALERT**: System lockdown in progress. Core temperature rising. Initialize override protocol immediately.
 
 Protocol: MELTDOWN is a hacking-themed puzzle game that challenges players to solve technical and logic-based problems under pressure. This repository contains the project recreated through **four progressive stages of web development architecture**, ranging from raw Vanilla Web to Advanced React with performance optimizations.
